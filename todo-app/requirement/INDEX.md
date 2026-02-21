@@ -12,10 +12,7 @@ Track all project requirements here.
 
 | ID | Priority | Status | Title | Assigned |
 |----|----------|--------|-------|----------|
-| REQ-001 | P0 | [/] | Todo Web Application | AI |
-
-|----|----------|--------|-------|----------|
-| REQ-001 | P2 | [ ] | Example requirement | - |
+| - | - | - | - | - |
 
 ## Backlog
 
@@ -23,7 +20,10 @@ Track all project requirements here.
 
 ## Completed
 
-<!-- Move completed requirements here -->
+| ID | Priority | Status | Title | Assigned |
+|----|----------|--------|-------|----------|
+| REQ-001 | P0 | [] | Todo Web Application | AI |
+| REQ-002 | P1 | [x] | Python Todo Application | AI |
 
 ---
 

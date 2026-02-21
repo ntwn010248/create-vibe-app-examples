@@ -1,50 +1,60 @@
-# Design: Todo Web Application
+# Design: Python Todo Application
 
 ## Overview
-A simple, elegant todo application with CRUD operations and local persistence.
+This design covers a local Python todo app with a CLI. The app stores todos in JSON and supports add, list, complete, and delete operations.
+
+## Goals
+- Provide a small, dependency-free todo app using Python standard library.
+- Keep business logic testable and independent from CLI parsing.
+- Persist todos across runs in a local JSON file.
+
+## Non-Goals
+- Multi-user support
+- Remote sync or database backend
+- GUI or web frontend
 
 ## Architecture
 
-### Component Structure
-```
-index.html          - Main HTML structure
-├── styles.css      - Styling
-└── app.js          - Application logic
-    ├── TodoApp     - Main application class
-    ├── Storage     - localStorage wrapper
-    └── UI          - DOM manipulation
-```
+### Components
+| Component | Responsibility |
+|-----------|----------------|
+| `TodoService` | Core operations: add, list, complete, delete |
+| `TodoStore` | Load/save JSON persistence |
+| `cli.py` | Parse command arguments and print output |
 
-### Data Model
-```javascript
+### Data Flow
+1. User runs CLI command.
+2. CLI initializes `TodoStore` and `TodoService`.
+3. Service validates inputs and mutates in-memory items.
+4. Store persists updated state to disk.
+5. CLI prints success or error message.
+
+## Data Model
+```python
 {
-  id: string,       // unique identifier
-  text: string,     // todo content
-  completed: boolean,
-  createdAt: number // timestamp
+  "id": int,
+  "text": str,
+  "completed": bool
 }
 ```
 
-### API (Internal)
+## API Design (Internal)
 | Function | Description |
 |----------|-------------|
-| `addTodo(text)` | Add new todo |
-| `toggleTodo(id)` | Toggle completion |
-| `deleteTodo(id)` | Remove todo |
-| `getTodos()` | Get all todos |
-| `saveTodos()` | Persist to localStorage |
+| `add_task(text: str) -> dict` | Add a non-empty task |
+| `list_tasks() -> list[dict]` | Return all tasks |
+| `complete_task(task_id: int) -> dict` | Mark task complete |
+| `delete_task(task_id: int) -> dict` | Remove task |
 
-## UI Design
-- Clean, minimal interface
-- Input field with add button
-- Todo list with checkboxes
-- Delete button on hover
-- Completed todos with strikethrough
-- Dark/light theme support
+## Alternatives Considered
+| Option | Pros | Cons |
+|--------|------|------|
+| SQLite backend | Stronger persistence | More complexity for a small app |
+| In-memory only | Very simple | No persistence across runs |
+| External CLI libs | Better UX | Extra dependency overhead |
 
-## Tech Decisions
-| Decision | Rationale |
-|----------|-----------|
-| Vanilla JS | Simple, no build step needed |
-| localStorage | No backend complexity |
-| CSS Variables | Easy theming |
+## Risks
+| Risk | Mitigation |
+|------|------------|
+| Corrupt JSON file | Fallback to empty list on decode errors |
+| Invalid task id handling | Raise clear `ValueError` from service |

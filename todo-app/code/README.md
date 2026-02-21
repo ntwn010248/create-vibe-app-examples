@@ -1,37 +1,21 @@
-# Source Code
+# Python Todo App
 
-Your project source code goes here.
-
-## Structure
-Organize your code based on your project type:
-
-### Backend
-```
-code/
-├── src/
-├── tests/
-└── config/
+## Run
+```powershell
+python code/cli.py list
+python code/cli.py add "Buy milk"
+python code/cli.py complete 1
+python code/cli.py delete 1
 ```
 
-### Frontend
-```
-code/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── utils/
-└── public/
+By default, tasks are saved to `todos.json` in the current directory.  
+Use `--file` to change storage location:
+
+```powershell
+python code/cli.py --file code/todos.json add "Write docs"
 ```
 
-### Full Stack
+## Test
+```powershell
+python -m unittest discover -s code/tests -p "test_*.py"
 ```
-code/
-├── backend/
-├── frontend/
-└── shared/
-```
-
-## Tips
-- Follow consistent naming conventions
-- Keep related code together
-- Write tests alongside implementation
